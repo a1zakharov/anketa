@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Анкета</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            width: 33.33%; /* Равная ширина для трех колонок */
+        }
+
+        th {
+            background: #f8f9fa;
+            text-align: left;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .hint {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            
+            th, td {
+                width: 100%;
+                text-align: center;
+            }
+            
+            td {
+                border-bottom: 2px solid #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Просим вас заполнить анкету необходимыми данными, чтобы мы смогли создать индивидуальный инсталлятор on-premises</h1>
+    <form action="/submit" method="POST">
+        <table>
+            <tr>
+                <th><label>Тип размещения сервера</label></th>
+                <td class="input-cell">
+                    <select id="type" name="type" required>
+                        <option value="">-- Выбор --</option>
+                        <option value="Публично">Публично с доступом в интернет</option>
+                        <option value="Публично">Закрытая сеть с ограниченным доступ в интернет</option>
+                        <option value="Закрытая">Закрытая сеть</option>
+                    </select>
+                </td>
+                <td class="hint">
+                    <p>- Публично с доступом в интернет - проверки лицензии через API Контур, возможен удаленный доступ изнутри сети наружу в интернет и наоборот.</p>
+                    <p>
+
+                    </p>
+                    <p>- Закрытая сеть с ограниченным доступ в интернет - для проверки лицензии через API Контур открываются определенные сетевые порты, нет возможности создания удаленного доступа за пределы внутренней сети.</p>
+                    <p> 
+
+                    </p>
+                    <p>- Закрытая сеть - проверка лицензии производится без доступа в интернет с помощью специального файла, нет возможности создания удаленного доступа за пределы внутренней сети.</p>
+                    
+                </td>
+            </tr>
+
+            <!-- 2. DNS -->
+            <tr>
+                <th><label for="dns">Имеется ли возможность настроить доменные имена DNS?</label></th>
+                <td class="input-cell">
+                    <select id="dns" name="dns">
+                        <option value="-- Выбор --">-- Выбор --</option>
+                        <option value="Имеется">Имеется</option>
+                        <option value="Отсутствует, вход в сервис осуществляется только по IP адресу">Отсутствует, вход в сервис осуществляется только по IP адресу</option>
+                    </select>
+                </td>
+                <td class=""></td>
+            </tr>
+
+            <!-- 3. Адрес -->
+            <tr>
+                <th><label for="address">Как будет выглядеть адрес для личного кабинета, в котором происходит управление пользователями, наполнение и подключение из адресной книги. Если имена DNS не настроены, то укажите IP-адрес:</label></th>
+                <td class="input-cell">
+                    <input type="text" name="usercp">
+                </td>
+                <td class="hint">
+                    <p>Пример для публичного доменного имени — dostup.romashka.ru, </p>
+                    <p>пример для локального доменного имени — dostup.romashka.local</p>
+
+                </td>
+            </tr>
+
+            <!-- 4. Адрес -->
+            <tr>
+                <th><label for="address">Как будет выглядеть адрес для страницы аутентификации операторов (кто подключается). Если имена DNS не настроены, то укажите IP-адрес:</label></th>
+                <td class="input-cell">
+                    <input type="text" name="auht">
+                </td>
+                <td class="hint">
+                    <p>Пример для публичного доменного имени — auth-dostup.romashka.ru, </p>
+                    <p>пример для локального доменного имени — auth-dostup.romashka.local</p>
+                </td>
+            </tr>
+
+            <!-- 5. Адрес -->
+            <tr>
+                <th><label for="address">Как будет выглядеть адрес для шлюза (ни на что не влияет, этот адрес занимается сервисом для корректной работы). Если имена DNS не настроены, то укажите IP-адрес:</label></th>
+                <td class="input-cell">
+                    <input type="text" name="ids">
+                </td>
+                <td class="hint">
+                    <p>Пример для публичного доменного имени — ids-dostup.romashka.ru, </p>
+                    <p>пример для локального доменного имени — ids-dostup.romashka.local</p>
+                </td>
+            </tr>
+
+            <!-- 6. Провайдер аутентификации -->
+            <tr>
+                <th><label for="source">Какой провайдер аутентификации у вас настроен или вы готовы настроить для сервиса:</label></th>
+                <td class="input-cell">
+                    <select id="source" name="provider">
+                        <option value="">-- Выбор --</option>
+                        <option value="">Учетные записи контур (на сервере требуется доступ в интернет)</option>
+                        <option value="">LDAP</option>
+                        <option value="">OpenID Connect</option>
+                    </select>
+                </td>
+                <td class="hint"></td>
+            </tr>
+            
+            <!-- 7. Профессия -->
+            <tr>
+                <th><label for="job">Отпечаток сертификата SSL для HTTPS (SHA-1 или SHA-2):</label></th>
+                <td class="input-cell">
+                    <input type="text" name="SSL">
+                </td>
+                <td class="hint">
+                    <p><a href="https://support.kontur.ru/dostup/47179-ssl_sertifikat_domena">Зачем это?</a></p>
+                    <p><a href="https://support.kontur.ru/dostup/47118-ssl_certificate_imprint">Как получить отпечаток сертификата</a></p>
+                    <p><a href="https://support.kontur.ru/dostup/47180-sozdanie_samopodpisannogo_sslsertifikata">Если сертификат отсутствует, то имеется возможность создать самоподписанный сертификат</a></p>
+                </td>
+            </tr>
+
+            <!-- 8. ключ -->
+            <tr>
+                <th><label for="education">ПУНКТ ТОЛЬКО ДЛЯ ПОЛНОСТЬЮ ЗАКРЫТОЙ СЕТИ. Для версии on-premises без доступа в интернет необходимо создать лицензионный ключ и вставить его в поле справа.</label></th>
+                <td class="input-cell">
+                    <input type="text" name="hwid">
+                </td>
+                <td class="hint">
+                    <p>Если ранее выбрали тип размещения с доступом в интернет или частичным доступом, то пропустите данный пункт</p>
+                    <p><a href="https://support.kontur.ru/dostup/51539-licenzionnyj_klyuch_onpremise">Инструкция по генерации ключа для закрытой сети</a></p>
+                </td>
+            </tr>
+
+            <!-- 9. ИНН -->
+            <tr>
+                <th><label for="hobbies">ИНН-КПП вашей организации</label></th>
+                <td class="input-cell">
+                    <input type="text" name="inn">
+                </td>
+                <td class="hint"></td>
+            </tr>
+
+            <!-- 10. Укажите почту -->
+            <tr>
+                <th><label for="info">Укажите почту для отправки дистрибутивов с инструкциями и почту для отправки с нашей стороны новых версий серверной части Доступа.</label></th>
+                <td class="input-cell">
+                    <input type="text" name="email">
+                </td>
+                <td class="hint"></td>
+            </tr>
+        </table>
+        
+        <button type="submit" style="margin-left: 10px;">Отправить</button>
+    </form>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Собираем данные формы
+            const formData = {
+                name: this.name.value,
+                age: this.age.value,
+                interests: Array.from(this.interests)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value)
+            };
+            
+            // Создаем JSON
+            const json = JSON.stringify(formData, null, 2);
+            
+            // Создаем файл для скачивания
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            // Создаем временную ссылку
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `анкета_${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            
+            // Очистка
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
