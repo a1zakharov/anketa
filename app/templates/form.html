@@ -115,6 +115,25 @@
                 <td class=""></td>
             </tr>
 
+                        <!-- 2. OS -->
+            <tr>
+                <th><label for="dns">На какую операционную систему планируете устанавливать сервер?</label></th>
+                <td class="input-cell">
+                    <select id="dns" name="dns">
+                        <option value="-- Выбор --">-- Выбор --</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Ubuntu">Ubuntu</option>
+                        <option value="Astra">Astra</option>
+                        <option value="Alt">Alt</option>
+                        <option value="RedOS">RedOS</option>
+                    </select>
+                </td>
+                <td class="hint">
+                    <p>Необходимо выбрать 1 вариант</p>
+                    <p>Дистрибутивы и способы установки отличаются для разных ОС</p>
+                </td>
+            </tr>
+
             <!-- 3. Адрес -->
             <tr>
                 <th><label for="address">Как будет выглядеть адрес для личного кабинета, в котором происходит управление пользователями, наполнение и подключение из адресной книги. Если имена DNS не настроены, то укажите IP-адрес:</label></th>
@@ -210,7 +229,7 @@
             </tr>
         </table>
         
-        <button type="submit" style="margin-left: 10px;">Отправить</button>
+        <button type="submit" style="margin-left: 10px;">Скачать</button>
     </form>
     <script>
         document.getElementById('myForm').addEventListener('submit', function(e) {
